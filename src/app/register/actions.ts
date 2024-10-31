@@ -1,6 +1,9 @@
 'use server'
 import { wholePasswordValidationSchema } from '@/lib/validations';
 import { z } from 'zod'
+import { hash } from 'bcrypt';
+import { users } from "../../../db/usersSchema";
+import db from '../../../db/drizzle';
 
 export const registerUser = async ({
     email,
@@ -11,21 +14,44 @@ export const registerUser = async ({
     password: string;
     passwordConfirm: string;
 }) => {
-    const newUserSchema = z.object({
-        email: z.string().email(),
-    }).and(wholePasswordValidationSchema)
+    try {
+        const newUserSchema = z
+            .object({
+                email: z.string().email(),
+            })
+            .and(wholePasswordValidationSchema);
 
-    const newUserValidation = newUserSchema.safeParse({
-        email,
-        password,
-        passwordConfirm
-    })
+        const newUserValidation = newUserSchema.safeParse({
+            email,
+            password,
+            passwordConfirm,
+        });
 
-    if (!newUserValidation.success) {
+        if (!newUserValidation.success) {
+            return {
+                error: true,
+                message:
+                    newUserValidation.error.issues[0]?.message ?? "An error occurred",
+            };
+        }
+
+        const hashedPassword = await hash(password, 10);
+
+        await db.insert(users).values({
+            email,
+            password: hashedPassword,
+        });
+    } catch (e: any) {
+        if (e.code === "23505") {
+            return {
+                error: true,
+                message: "An account is already registered with that email address.",
+            };
+        }
+
         return {
             error: true,
-            message:
-                newUserValidation.error.issues[0]?.message ?? "An error occurred",
+            message: "An error occurred.",
         };
     }
 }
