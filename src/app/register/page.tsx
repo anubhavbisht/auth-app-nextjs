@@ -1,5 +1,5 @@
 "use client"
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardContent, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -29,7 +29,6 @@ export default function Register() {
             password: "",
             passwordConfirm: ""
         },
-
     })
 
     const handleSubmit = async (data: z.infer<typeof formSchema>) => {
@@ -47,7 +46,7 @@ export default function Register() {
 
     return <main className="flex items-center justify-center min-h-screen">
         {form.formState.isSubmitSuccessful ? (
-            <Card className="w-[350px]">
+            <Card className="w-[500px]">
                 <CardHeader>
                     <CardTitle>Your account has been created</CardTitle>
                 </CardHeader>
@@ -61,7 +60,7 @@ export default function Register() {
             <Card className="w-[500px]">
                 <CardHeader>
                     <CardTitle>Register</CardTitle>
-                    <CardDescription>Register for a new account</CardDescription>
+                    <CardDescription>Register for a new account.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
@@ -111,6 +110,14 @@ export default function Register() {
                         </form>
                     </Form>
                 </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <div className="text-muted-foreground text-sm">
+                        Already have an account?{" "}
+                        <Link href="/login" className="underline text-black">
+                            Login
+                        </Link>
+                    </div>
+                </CardFooter>
             </Card>)}
     </main>
 }

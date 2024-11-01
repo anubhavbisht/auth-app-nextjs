@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const passwordSchema = z.string().min(5, "Password must contain at least 5 characters");
+export const passwordSchema = z.string().min(5, "Password must contain at least 5 characters");
 
 export const wholePasswordValidationSchema = z.object({
     password: passwordSchema,

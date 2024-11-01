@@ -1,7 +1,7 @@
 'use server'
 import { wholePasswordValidationSchema } from '@/lib/validations';
 import { z } from 'zod'
-import { hash } from 'bcrypt';
+import { hash } from 'bcryptjs';
 import { users } from "../../../db/usersSchema";
 import db from '../../../db/drizzle';
 
