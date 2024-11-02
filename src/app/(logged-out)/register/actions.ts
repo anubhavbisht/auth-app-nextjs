@@ -2,8 +2,8 @@
 import { wholePasswordValidationSchema } from '@/lib/validations';
 import { z } from 'zod'
 import { hash } from 'bcryptjs';
-import { users } from "../../../db/usersSchema";
-import db from '../../../db/drizzle';
+import { users } from "../../../../db/usersSchema";
+import db from '../../../../db/drizzle';
 
 export const registerUser = async ({
     email,
