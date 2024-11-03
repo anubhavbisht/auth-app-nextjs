@@ -1,2 +1,2 @@
 export { users } from "./usersSchema";
-// export { passwordResetTokens } from "./passwordResetTokensSchema";
+export { passwordResetTokens } from "./passwordResetTokensSchema";

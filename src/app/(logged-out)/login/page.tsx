@@ -48,6 +48,8 @@ export default function Login() {
         }
     };
 
+    const inputEmail = form.getValues('email')
+
     return <main className="flex items-center justify-center min-h-screen">
         <Card className="w-[500px]">
             <CardHeader>
@@ -84,7 +86,7 @@ export default function Login() {
                                     </FormItem>
                                 )}
                             />
-                            {!!form.formState.errors.root?.message && (
+                            {form.formState.errors.root?.message && (
                                 <FormMessage>
                                     {form.formState.errors.root.message}
                                 </FormMessage>
@@ -104,7 +106,7 @@ export default function Login() {
                 <div className="text-muted-foreground text-sm">
                     Forgot password?{" "}
                     <Link
-                        href={`/password-reset`}
+                        href={`/password-reset${inputEmail ? `?email=${encodeURIComponent(inputEmail)}` : ''}`}
                         className="underline text-black"
                     >
                         Reset my password

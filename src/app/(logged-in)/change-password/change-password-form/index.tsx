@@ -97,7 +97,7 @@ export default function ChangePasswordForm() {
                                 </FormItem>
                             )}
                         />
-                        {!!form.formState.errors.root?.message && (
+                        {form.formState.errors.root?.message && (
                             <FormMessage>{form.formState.errors.root?.message}</FormMessage>
                         )}
                         <Button type="submit">Change Password</Button>
